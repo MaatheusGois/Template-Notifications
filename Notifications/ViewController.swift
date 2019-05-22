@@ -7,14 +7,33 @@
 //
 
 import UIKit
+import UserNotifications
 
 class ViewController: UIViewController {
-
+    
+    var appDelegate = UIApplication.shared.delegate as? AppDelegate
+    
+    
+    @IBAction func send(_ sender: Any) {
+        let notificationType = "Local Notification"
+        self.appDelegate?.scheduleNotification(notificationType: notificationType)
+        self.appDelegate?.scheduleNotification(notificationType: notificationType)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // Do any additional setup after loading the view.\
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) {
+            (granted, error) in
+            if granted {
+                print("yes")
+            } else {
+                print("No")
+            }
+        }
+        
     }
-
-
+    
+    
+    
 }
 
