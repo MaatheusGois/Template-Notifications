@@ -73,40 +73,41 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         
-        if response.notification.request.identifier == "Local Notification" {
-            print(response.notification.request.identifier)
+        //TAKE REPONSE
+        if response.notification.request.identifier == "identifier" {
+            print(response.notification.request)
             print("Handling notifications with the Local Notification Identifier")
         }
         
         completionHandler()
     }
     
-    func scheduleNotification(notificationType: String) {
+    
+    
+    func scheduleNotification(_ title:String, _ subtitle:String, _ body:String, _ identifier:String) {
         
-        let content = UNMutableNotificationContent() // Содержимое уведомления
-        let categoryIdentifire = "Delete Notification Type"
+        let content = UNMutableNotificationContent()
         
-        content.title = "This is Title"
-        content.subtitle = "This is subtitle"
-        content.body = "This is body"
+        //CREATE BODY OF THE NOTIFICATION
+        content.title = title
+        content.subtitle = subtitle
+        content.body = body
         content.sound = UNNotificationSound.default
         content.badge = 1
-        content.categoryIdentifier = categoryIdentifire
+        content.categoryIdentifier = identifier
         
         
-        //Set logo
-        let imageName = "applelogo"
+        //SET IMAGE
+        let imageName = "logo"
         guard let imageURL = Bundle.main.url(forResource: imageName, withExtension: "png") else { return }
-        
         let attachment = try! UNNotificationAttachment(identifier: imageName, url: imageURL, options: .none)
-        
         content.attachments = [attachment]
         
         
         
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-        let identifier = "Local Notification"
+        //REQUEST NOTIFICATION
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         
         notificationCenter.add(request) { (error) in
@@ -115,13 +116,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             }
         }
         
-        let snoozeAction = UNNotificationAction(identifier: "Snooze", title: "Snooze", options: [])
-        let deleteAction = UNNotificationAction(identifier: "DeleteAction", title: "Delete", options: [.destructive])
-        let category = UNNotificationCategory(identifier: categoryIdentifire,
-                                              actions: [snoozeAction, deleteAction],
-                                              intentIdentifiers: [],
-                                              options: [])
         
-        notificationCenter.setNotificationCategories([category])
+        
+        //ACTIONS IN THE NOTIFICATION
+        
+//        let snoozeAction = UNNotificationAction(identifier: "Snooze", title: "Snooze", options: [])
+//        let deleteAction = UNNotificationAction(identifier: "DeleteAction", title: "Delete", options: [.destructive])
+//        let category = UNNotificationCategory(identifier: identifier,
+//                                              actions: [snoozeAction, deleteAction],
+//                                              intentIdentifiers: [],
+//                                              options: [])
+//
+//        notificationCenter.setNotificationCategories([category])
     }
 }

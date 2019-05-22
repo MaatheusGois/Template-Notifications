@@ -15,9 +15,13 @@ class ViewController: UIViewController {
     
     
     @IBAction func send(_ sender: Any) {
-        let notificationType = "Local Notification"
-        self.appDelegate?.scheduleNotification(notificationType: notificationType)
-        self.appDelegate?.scheduleNotification(notificationType: notificationType)
+//        let notificationType = "Local Notification"
+        let title = "title"
+        let subtitle = "subtitle"
+        let body = "body"
+        let identifier = "identifier\(Int.random(in: 0..<6))"
+        self.appDelegate?.scheduleNotification(title, subtitle, body, identifier)
+//        self.appDelegate?.scheduleNotification
     }
     override func viewDidLoad() {
         super.viewDidLoad()
